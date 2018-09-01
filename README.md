@@ -1,15 +1,15 @@
-# Sample IRIS API Application
+# Sample Recommendation System API Application
 
-Build IRIS Machine Learning Model using Scikit-Learn and deploy using Tornado Web Framework.
+Build Recommendation System and deploy using Tornado Web Framework.
 
 ## Setup Environment on Local Machine
 
 ### Installation
 
 ```
-cookiecutter https://github.com/sampathweb/cc-iris-api
+git clone <url>
 
-cd <repo>  # cd iris-api
+cd <repo>  # cd recommendation-api
 
 # Install Packages
 python env/create_env.py
@@ -31,20 +31,33 @@ python run.py
 2. Command Line:
 
 ```
-curl -i http://localhost:9000/api/iris/predict -X POST -d '{ "sepal_length": 2, "sepal_width": 5, "petal_length": 3, "petal_width": 4}'
+curl -i http://localhost:9000/api/recommendation/predict -X POST -d '{ "activeUser": 2, "numberOfRec": 5}'
 ```
 
-3. Jupyter Notebook:
+Returns:
 
-Open new terminal navigate to the new folder `iris-api`.  Start `jupyter notebook`. Open ml_src -> `api_client.ipynb`.  Test the API.
+```
+HTTP/1.1 200 OK
+Server: TornadoServer/5.0.2
+Content-Type: text/html; charset=UTF-8
+Date: Sat, 01 Sep 2018 08:42:14 GMT
+Content-Length: 45
 
-Api works!
+{"status": 200, "data": [64, 59, 12, 50, 89]}
+```
 
+The data in the JSON is the movieIds.
 
+### Note: It contains pickeled P and Q matrices for only first 100 users. If you want to train the model and find recommendation for all the users, you can do:
+
+```
+cd ml_src/LatentCollaborativeFiltering.py
+```
+
+You can also increase the step size and tweak hyperparameters for your choice.
 
 ## Credits:
 
-Template from https://github.com/sampathweb/cc-iris-api
 
 
 ### The End.

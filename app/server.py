@@ -36,15 +36,12 @@ def main():
     logging.basicConfig(format=FORMAT)
 
     # Load ML Models
-    logger.info("Loading IRIS Prediction Model...")
-    #MODELS["iris"] = load_model(os.path.join(MODEL_DIR, "iris", "model.pkl"))
+    logger.info("Loading Recommendation System Prediction Model...")
     #MODELS["user_factor"] = pd.read_pickle(MODEL_DIR, "user_factor.pkl")
     #MODELS["item_factor"] = pd.read_pickle(MODEL_DIR, "item_factor.pkl")
 
     urls = [
         (r"/$", IndexHandler),
-        #(r"/api/iris/(?P<action>[a-zA-Z]+)?", IrisPredictionHandler,
-        #    dict(model=MODELS["iris"])),
         (r"/api/recommendation/(?P<action>[a-zA-Z]+)?", RecommendationPredictionHandler)
             #dict(user_factor=MODELS["user_factor"], item_factor=MODELS["item_factor"]))
     ]
