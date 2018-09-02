@@ -94,6 +94,4 @@ local/
 /data/*
 
 # Exclude Model Pickle Files
-*.pickle
-*.pkl
 *.npy
