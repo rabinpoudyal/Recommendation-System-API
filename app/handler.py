@@ -36,13 +36,17 @@ class RecommendationPredictionHandler(BaseApiHandler):
         user_factor = pd.read_pickle("{}/user_factor.pkl".format(MODEL_DIR))
         item_factor = pd.read_pickle("{}/item_factor.pkl".format(MODEL_DIR))
         #print(X[0][1])
-        predictItemRating=pd.DataFrame(np.dot(user_factor.loc[X[0][0]],item_factor.T),index=item_factor.index,columns=['Rating'])
-        topRecommendations=pd.DataFrame.sort_values(predictItemRating,['Rating'],ascending=[0])[:X[0][1]]
-        # We found the ratings of all movies by the active user and then sorted them to find the top 3 movies 
-        #topRecommendationTitles=moviesData.loc[moviesData.itemid.isin(topRecommendations.index)]
-        #print(list(topRecommendationTitles.title))
-        #print(topRecommendationTitles)
-        return(topRecommendations.index.tolist())
+        print(user_factor.index.size)
+        if X[0][0] > user_factor.index.size:
+            return [0]
+        else:
+            predictItemRating=pd.DataFrame(np.dot(user_factor.loc[X[0][0]],item_factor.T),index=item_factor.index,columns=['Rating'])
+            topRecommendations=pd.DataFrame.sort_values(predictItemRating,['Rating'],ascending=[0])[:X[0][1]]
+            # We found the ratings of all movies by the active user and then sorted them to find the top 3 movies 
+            #topRecommendationTitles=moviesData.loc[moviesData.itemid.isin(topRecommendations.index)]
+            #print(list(topRecommendationTitles.title))
+            #print(topRecommendationTitles)
+            return(topRecommendations.index.tolist())
 
 
     @gen.coroutine
